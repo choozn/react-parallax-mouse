@@ -12,6 +12,12 @@
 
 (Read more at https://smartslider3.com/blog/parallax-effect/)
 
+## Example
+➔ An editable example can be found on CodeSandbox below.
+
+[![Edit react-parallax-mouse Example](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/embed/react-parallax-mouse-example-zjdsy?fontsize=14&hidenavigation=1&theme=dark&view=preview)
+
+
 ## Getting Started
 
 
