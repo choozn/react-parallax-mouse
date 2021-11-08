@@ -7,14 +7,6 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
-var MouseParallaxChild = function (_a) {
-    var children = _a.children;
-    return (React__default["default"].createElement(React__default["default"].Fragment, null,
-        " ",
-        children,
-        " "));
-};
-
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation.
 
@@ -123,6 +115,14 @@ var MouseParallaxContainer = function (_a) {
             // Apply Styles to each Child
             return (React__default["default"].createElement("div", { className: (child.props.className) && child.props.className, style: __assign({ willChange: "transform", transition: "transform 1e-7s linear" + ((transition) && ", ") + transition, transform: "translateX(" + animationOffset.x * (child.props.factorX || 0) + "px) translateY(" + animationOffset.y * (child.props.factorY || 0) + "px)" + transform }, rest) }, child));
         }))); }))));
+};
+
+var MouseParallaxChild = function (_a) {
+    var children = _a.children;
+    return (React__default["default"].createElement(React__default["default"].Fragment, null,
+        " ",
+        children,
+        " "));
 };
 
 exports.MouseParallaxChild = MouseParallaxChild;
