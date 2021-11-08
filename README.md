@@ -81,7 +81,7 @@ The library provides you with two components.
 
 ## Middleware
 
-➔ ``updateStyles`` in the ``MouseParallaxChild`` Props can be supplied with a middleware function instead of a regular CSS styles object. This functions takes in one argument.
+➔ ``updateStyles`` in the ``MouseParallaxChild`` Props can be supplied with a middleware function instead of a regular CSS styles object. This function takes in one argument.
 
 ```js
 updateStyles={(offset) => (
