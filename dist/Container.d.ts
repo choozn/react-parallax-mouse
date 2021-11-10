@@ -6,6 +6,8 @@ interface Props {
     inverted?: boolean;
     containerStyles?: React.CSSProperties;
     className?: string;
+    globalFactorX?: number;
+    globalFactorY?: number;
 }
-declare const MouseParallaxContainer: ({ children, resetOnLeave, useWindowMouseEvents, inverted, containerStyles, className }: Props) => JSX.Element;
+declare const MouseParallaxContainer: ({ children, resetOnLeave, useWindowMouseEvents, inverted, containerStyles, className, globalFactorX, globalFactorY }: Props) => JSX.Element;
 export default MouseParallaxContainer;

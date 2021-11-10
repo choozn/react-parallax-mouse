@@ -48,13 +48,13 @@ function __rest(s, e) {
 // Helper Function to check if a Variable is a Function
 var isFunction = function (value) { return value && (Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function); };
 var MouseParallaxContainer = function (_a) {
-    var children = _a.children, resetOnLeave = _a.resetOnLeave, useWindowMouseEvents = _a.useWindowMouseEvents, inverted = _a.inverted, containerStyles = _a.containerStyles, className = _a.className;
+    var children = _a.children, resetOnLeave = _a.resetOnLeave, useWindowMouseEvents = _a.useWindowMouseEvents, inverted = _a.inverted, containerStyles = _a.containerStyles, className = _a.className, _b = _a.globalFactorX, globalFactorX = _b === void 0 ? 1 : _b, _c = _a.globalFactorY, globalFactorY = _c === void 0 ? 1 : _c;
     // Convert one Child cases into one dimensional Array to map over
     if (!Array.isArray(children))
         children = [children];
-    var _b = React.useState([0, 0]), offset = _b[0], setOffset = _b[1];
+    var _d = React.useState([0, 0]), offset = _d[0], setOffset = _d[1];
     // Container Reference with Callback to use it inside of useEffect
-    var _c = React.useState({ current: null }), containerRef = _c[0], setContainerRef = _c[1];
+    var _e = React.useState({ current: null }), containerRef = _e[0], setContainerRef = _e[1];
     var containerRefWithCallback = React.useCallback(function (node) { if (node !== null) {
         setContainerRef({ current: node });
     } }, []);
@@ -113,7 +113,7 @@ var MouseParallaxContainer = function (_a) {
                     (_f = child.props.updateStyles, (_c = _f.transition, transition = _c === void 0 ? "" : _c, _d = _f.transform, transform = _d === void 0 ? "" : _d), rest = __rest(_f, ["transition", "transform"]));
             }
             // Apply Styles to each Child
-            return (React__default["default"].createElement("div", { className: (child.props.className) && child.props.className, style: __assign({ willChange: "transform", transition: "transform 1e-7s linear" + ((transition) && ", ") + transition, transform: "translateX(" + animationOffset.x * (child.props.factorX || 0) + "px) translateY(" + animationOffset.y * (child.props.factorY || 0) + "px)" + transform }, rest) }, child));
+            return (React__default["default"].createElement("div", { className: (child.props.className) && child.props.className, style: __assign({ willChange: "transform", transition: "transform 1e-7s linear" + ((transition) && ", ") + transition, transform: "translateX(" + (animationOffset.x * (child.props.factorX || 0)) * globalFactorX + "px) translateY(" + (animationOffset.y * (child.props.factorY || 0)) * globalFactorY + "px)" + transform }, rest) }, child));
         }))); }))));
 };
 
