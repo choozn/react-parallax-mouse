@@ -8,12 +8,14 @@ interface Props {
     inverted?: boolean;
     containerStyles?: React.CSSProperties;
     className?: string;
+    globalFactorX?: number;
+    globalFactorY?: number;
 }
 
 // Helper Function to check if a Variable is a Function
 const isFunction: (value: any) => boolean = value => value && (Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function);
 
-const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, inverted, containerStyles, className }: Props) => {
+const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, inverted, containerStyles, className, globalFactorX = 1, globalFactorY = 1 }: Props) => {
 
     // Convert one Child cases into one dimensional Array to map over
     if (!Array.isArray(children))
@@ -107,7 +109,7 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
                                                 {
                                                     willChange: "transform",
                                                     transition: `transform 1e-7s linear${(transition) && ", "}${transition}`,
-                                                    transform: `translateX(${animationOffset.x * (child.props.factorX || 0)}px) translateY(${animationOffset.y * (child.props.factorY || 0)}px)${transform}`,
+                                                    transform: `translateX(${(animationOffset.x * (child.props.factorX || 0)) * globalFactorX}px) translateY(${(animationOffset.y * (child.props.factorY || 0)) * globalFactorY}px)${transform}`,
                                                     ...rest,
                                                 }
                                             }>

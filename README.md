@@ -66,6 +66,8 @@ The library provides you with two components.
 |resetOnLeave| boolean| Resets the view to 0:0 offset when the mouse leaves the container
 |useWindowMouseEvents| boolean | Uses the window event handler instead of the container event handler to track mouse movement
 |inverted| boolean | Inverts the offset of ``ParallaxChildren`` on mouse movement
+|globalFactorX| number (default: 1) | Strength multiplier of the effect on the X axis for every child component
+|globalFactorY| number (default: 1)| Strength multiplier of the effect on the Y axis for every child component
 |containerStyles| React.CSSProperties (Object) | Additional CSS attributes which are applied directly to the parallax container element (equal to ``style`` on HTML elements)
 |className| string | The class name of the container
 
