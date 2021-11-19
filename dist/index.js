@@ -48,7 +48,7 @@ function __rest(s, e) {
 // Helper Function to check if a Variable is a Function
 var isFunction = function (value) { return value && (Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function); };
 var MouseParallaxContainer = function (_a) {
-    var children = _a.children, resetOnLeave = _a.resetOnLeave, useWindowMouseEvents = _a.useWindowMouseEvents, inverted = _a.inverted, containerStyles = _a.containerStyles, className = _a.className, _b = _a.globalFactorX, globalFactorX = _b === void 0 ? 1 : _b, _c = _a.globalFactorY, globalFactorY = _c === void 0 ? 1 : _c;
+    var children = _a.children, resetOnLeave = _a.resetOnLeave, useWindowMouseEvents = _a.useWindowMouseEvents, inverted = _a.inverted, containerStyles = _a.containerStyles, className = _a.className, _b = _a.globalFactorX, globalFactorX = _b === void 0 ? 1 : _b, _c = _a.globalFactorY, globalFactorY = _c === void 0 ? 1 : _c, disableCSSTransition = _a.disableCSSTransition;
     // Convert one Child cases into one dimensional Array to map over
     if (!Array.isArray(children))
         children = [children];
@@ -74,8 +74,6 @@ var MouseParallaxContainer = function (_a) {
                 containerWidth / 2 - mousePosition.x,
                 containerHeight / 2 - mousePosition.y
             ];
-            if (inverted)
-                relativeToCenter = [relativeToCenter[0] * -1, relativeToCenter[1] * -1];
             setOffset(relativeToCenter);
         }
     }, [containerRef, getMousePosition, inverted]);
@@ -93,9 +91,17 @@ var MouseParallaxContainer = function (_a) {
     }, [containerRef, mouseMovementHandler, resetOnLeave, useWindowMouseEvents]);
     return (React__default["default"].createElement(React__default["default"].Fragment, null,
         React__default["default"].createElement("div", { className: (className) && className, id: "mouse-parallax-container", style: __assign({ overflow: 'hidden', position: 'relative' }, containerStyles), ref: containerRefWithCallback, onMouseMove: (!useWindowMouseEvents) ? mouseMovementHandler : function () { }, onMouseLeave: (resetOnLeave && !useWindowMouseEvents) ? (function () { return setOffset([0, 0]); }) : function () { return null; } }, children.map(function (child, index) { return ((child) && (React__default["default"].createElement(reactMotion.Motion, { key: child.key || index, style: {
-                x: reactMotion.spring(offset[0], child.props.springConfig),
-                y: reactMotion.spring(offset[1], child.props.springConfig),
-            } }, function (animationOffset) {
+                x: reactMotion.spring(offset[0]
+                    * (child.props.factorX || 0)
+                    * globalFactorX
+                    * ((child.props.inverted) ? -1 : 1)
+                    * ((inverted) ? -1 : 1), child.props.springConfig),
+                y: reactMotion.spring(offset[1]
+                    * (child.props.factorY || 0)
+                    * globalFactorY
+                    * ((child.props.inverted) ? -1 : 1)
+                    * ((inverted) ? -1 : 1), child.props.springConfig)
+            } }, function (springOffset) {
             var _a, _b, _c, _d;
             var _e, _f;
             // Update Style Injection
@@ -105,15 +111,15 @@ var MouseParallaxContainer = function (_a) {
                     // Middleware Function
                     (_e = child.props.updateStyles({
                         "container": (containerRef.current) ? { x: containerRef.current.clientWidth, y: containerRef.current.clientHeight } : { x: 0, y: 0 },
-                        "px": animationOffset,
-                        "percentage": (containerRef.current) ? { x: animationOffset.x / containerRef.current.clientWidth * 2 * 100, y: animationOffset.y / containerRef.current.clientHeight * 2 * 100 } : { x: 0, y: 0 }
+                        "px": springOffset,
+                        "percentage": (containerRef.current) ? { x: springOffset.x / containerRef.current.clientWidth * 2 * 100, y: springOffset.y / containerRef.current.clientHeight * 2 * 100 } : { x: 0, y: 0 }
                     }), (_a = _e.transition, transition = _a === void 0 ? "" : _a, _b = _e.transform, transform = _b === void 0 ? "" : _b), rest = __rest(_e, ["transition", "transform"]));
                 else
                     // CSS Style Object
                     (_f = child.props.updateStyles, (_c = _f.transition, transition = _c === void 0 ? "" : _c, _d = _f.transform, transform = _d === void 0 ? "" : _d), rest = __rest(_f, ["transition", "transform"]));
             }
             // Apply Styles to each Child
-            return (React__default["default"].createElement("div", { className: (child.props.className) && child.props.className, style: __assign({ willChange: "transform", transition: "transform 1e-7s linear" + ((transition) && ", ") + transition, transform: "translateX(" + (animationOffset.x * (child.props.factorX || 0)) * globalFactorX + "px) translateY(" + (animationOffset.y * (child.props.factorY || 0)) * globalFactorY + "px)" + transform }, rest) }, child));
+            return (React__default["default"].createElement("div", { className: (child.props.className) && child.props.className, style: __assign({ willChange: "transform", transition: "" + ((!disableCSSTransition) && "transform 1e-7s linear") + ((transition) && ", ") + transition, transform: "translateX(" + springOffset.x + "px) translateY(" + springOffset.y + "px) " + transform }, rest) }, child));
         }))); }))));
 };
 

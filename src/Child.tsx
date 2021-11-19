@@ -9,6 +9,7 @@ interface Props {
     children?: JSX.Element | JSX.Element[];
     className?: string;
     updateStyles?: Middleware | React.CSSProperties;
+    inverted?: boolean;
 }
 
 const MouseParallaxChild = ({ children }: Props) => (<> {children} </>);

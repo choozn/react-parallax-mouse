@@ -10,12 +10,13 @@ interface Props {
     className?: string;
     globalFactorX?: number;
     globalFactorY?: number;
+    disableCSSTransition?: boolean;
 }
 
 // Helper Function to check if a Variable is a Function
 const isFunction: (value: any) => boolean = value => value && (Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function);
 
-const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, inverted, containerStyles, className, globalFactorX = 1, globalFactorY = 1 }: Props) => {
+const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, inverted, containerStyles, className, globalFactorX = 1, globalFactorY = 1, disableCSSTransition }: Props) => {
 
     // Convert one Child cases into one dimensional Array to map over
     if (!Array.isArray(children))
@@ -45,7 +46,6 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
                 containerWidth / 2 - mousePosition.x,
                 containerHeight / 2 - mousePosition.y
             ];
-            if (inverted) relativeToCenter = [relativeToCenter[0] * -1, relativeToCenter[1] * -1];
             setOffset(relativeToCenter);
         }
     }, [containerRef, getMousePosition, inverted]);
@@ -78,10 +78,28 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
                         (child) && (
 
                             <Motion key={child.key || index} style={{
-                                x: spring(offset[0], child.props.springConfig),
-                                y: spring(offset[1], child.props.springConfig),
+
+                                x: spring(
+                                    offset[0]
+                                    * (child.props.factorX || 0)
+                                    * globalFactorX
+                                    * ((child.props.inverted) ? -1 : 1)
+                                    * ((inverted) ? -1 : 1)
+                                    , child.props.springConfig
+                                ),
+
+                                y: spring(
+                                    offset[1]
+                                    * (child.props.factorY || 0)
+                                    * globalFactorY
+                                    * ((child.props.inverted) ? -1 : 1)
+                                    * ((inverted) ? -1 : 1)
+                                    , child.props.springConfig
+                                )
+
                             }}>
-                                {animationOffset => {
+
+                                {springOffset => {
 
                                     // Update Style Injection
                                     var [transition, transform, rest] = ["", "", {}];
@@ -92,8 +110,8 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
                                             ({ transition="", transform="", ...rest } = child.props.updateStyles(
                                                 {
                                                     "container": (containerRef.current) ? { x: containerRef.current.clientWidth, y: containerRef.current.clientHeight } : { x: 0, y: 0 },
-                                                    "px": animationOffset,
-                                                    "percentage": (containerRef.current) ? { x: animationOffset.x / containerRef.current.clientWidth * 2 * 100, y: animationOffset.y / containerRef.current.clientHeight * 2 * 100 } : { x: 0, y: 0 }
+                                                    "px": springOffset,
+                                                    "percentage": (containerRef.current) ? { x: springOffset.x / containerRef.current.clientWidth * 2 * 100, y: springOffset.y / containerRef.current.clientHeight * 2 * 100 } : { x: 0, y: 0 }
                                                 }
                                             ));
                                         else
@@ -108,8 +126,8 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
                                             style={
                                                 {
                                                     willChange: "transform",
-                                                    transition: `transform 1e-7s linear${(transition) && ", "}${transition}`,
-                                                    transform: `translateX(${(animationOffset.x * (child.props.factorX || 0)) * globalFactorX}px) translateY(${(animationOffset.y * (child.props.factorY || 0)) * globalFactorY}px)${transform}`,
+                                                    transition: `${(!disableCSSTransition) && "transform 1e-7s linear"}${(transition) && ", "}${transition}`,
+                                                    transform: `translateX(${springOffset.x}px) translateY(${springOffset.y}px) ${transform}`,
                                                     ...rest,
                                                 }
                                             }>

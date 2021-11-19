@@ -8,6 +8,7 @@ interface Props {
     children?: JSX.Element | JSX.Element[];
     className?: string;
     updateStyles?: Middleware | React.CSSProperties;
+    inverted?: boolean;
 }
 declare const MouseParallaxChild: ({ children }: Props) => JSX.Element;
 export default MouseParallaxChild;

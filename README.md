@@ -69,6 +69,7 @@ The library provides you with two components.
 |globalFactorX| number (default: 1) | Strength multiplier of the effect on the X axis for every child component
 |globalFactorY| number (default: 1)| Strength multiplier of the effect on the Y axis for every child component
 |containerStyles| React.CSSProperties (Object) | Additional CSS attributes which are applied directly to the parallax container element (equal to ``style`` on HTML elements)
+|disableCSSTransition| boolean | Disables a CSS transition which smoothens the transform
 |className| string | The class name of the container
 
 ### ➔ MouseParallaxChild
@@ -77,6 +78,7 @@ The library provides you with two components.
 | ------ | ------ | ----- |
 |**factorX** (!)| number | Strength factor for the movement on the X axis
 |**factorY** (!)| number | Strength factor for the movement on the Y axis
+|inverted| boolean | Inverts the offset of the specific child element on mouse movement
 |springConfig| SpringHelperConfig | React Motion Spring Config (https://github.com/chenglou/react-motion#helpers)
 |updateStyles| React.CSSProperties (Object) or Middleware Function (Explained below) | Additional CSS attributes which are applied directly to the parallax child container element (equal to ``style`` on HTML elements) on each offset calculation - A Middleware function can be used
 |className| string | The class name of the child
