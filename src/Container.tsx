@@ -119,6 +119,9 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
                                             ({ transition="", transform="", ...rest } = child.props.updateStyles);
                                     }
 
+                                    let transitionStyle = `${(!disableCSSTransition) && "transform 1e-7s linear"}${(transition) && ", "}${transition}`;
+                                    let transformStyle = `translateX(${springOffset.x}px) translateY(${springOffset.y}px) ${transform}`;
+
                                     // Apply Styles to each Child
                                     return (
                                         <div
@@ -126,12 +129,8 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
                                             style={
                                                 {
                                                     willChange: "transform",
-                                                    transition: `${(!disableCSSTransition) && "transform 1e-7s linear"}${(transition) && ", "}${transition}`,
-                                                    WebkitTransition: `${(!disableCSSTransition) && "transform 1e-7s linear"}${(transition) && ", "}${transition}`,
-                                                    msTransition: `${(!disableCSSTransition) && "transform 1e-7s linear"}${(transition) && ", "}${transition}`,
-                                                    transform: `translateX(${springOffset.x}px) translateY(${springOffset.y}px) ${transform}`,
-                                                    WebkitTransform: `translateX(${springOffset.x}px) translateY(${springOffset.y}px) ${transform}`,
-                                                    msTransform: `translateX(${springOffset.x}px) translateY(${springOffset.y}px) ${transform}`,
+                                                    transition: transitionStyle, WebkitTransition: transitionStyle, msTransition: transitionStyle,
+                                                    transform: transformStyle, WebkitTransform: transformStyle, msTransform: transformStyle,
                                                     ...rest,
                                                 }
                                             }>
