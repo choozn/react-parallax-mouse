@@ -127,7 +127,11 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
                                                 {
                                                     willChange: "transform",
                                                     transition: `${(!disableCSSTransition) && "transform 1e-7s linear"}${(transition) && ", "}${transition}`,
+                                                    WebkitTransition: `${(!disableCSSTransition) && "transform 1e-7s linear"}${(transition) && ", "}${transition}`,
+                                                    msTransition: `${(!disableCSSTransition) && "transform 1e-7s linear"}${(transition) && ", "}${transition}`,
                                                     transform: `translateX(${springOffset.x}px) translateY(${springOffset.y}px) ${transform}`,
+                                                    WebkitTransform: `translateX(${springOffset.x}px) translateY(${springOffset.y}px) ${transform}`,
+                                                    msTransform: `translateX(${springOffset.x}px) translateY(${springOffset.y}px) ${transform}`,
                                                     ...rest,
                                                 }
                                             }>
