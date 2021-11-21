@@ -119,7 +119,7 @@ var MouseParallaxContainer = function (_a) {
                     (_f = child.props.updateStyles, (_c = _f.transition, transition = _c === void 0 ? "" : _c, _d = _f.transform, transform = _d === void 0 ? "" : _d), rest = __rest(_f, ["transition", "transform"]));
             }
             // Apply Styles to each Child
-            return (React__default["default"].createElement("div", { className: (child.props.className) && child.props.className, style: __assign({ willChange: "transform", transition: "" + ((!disableCSSTransition) && "transform 1e-7s linear") + ((transition) && ", ") + transition, transform: "translateX(" + springOffset.x + "px) translateY(" + springOffset.y + "px) " + transform }, rest) }, child));
+            return (React__default["default"].createElement("div", { className: (child.props.className) && child.props.className, style: __assign({ willChange: "transform", transition: "" + ((!disableCSSTransition) && "transform 1e-7s linear") + ((transition) && ", ") + transition, WebkitTransition: "" + ((!disableCSSTransition) && "transform 1e-7s linear") + ((transition) && ", ") + transition, msTransition: "" + ((!disableCSSTransition) && "transform 1e-7s linear") + ((transition) && ", ") + transition, transform: "translateX(" + springOffset.x + "px) translateY(" + springOffset.y + "px) " + transform, WebkitTransform: "translateX(" + springOffset.x + "px) translateY(" + springOffset.y + "px) " + transform, msTransform: "translateX(" + springOffset.x + "px) translateY(" + springOffset.y + "px) " + transform }, rest) }, child));
         }))); }))));
 };
 
