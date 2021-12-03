@@ -8,7 +8,7 @@
 🚀 Ready to use and provided with types
 
 ## What is the Mouse Parallax Effect?
-➔ The parallax effect creates the illusion of depth when the cursor moves inside a specified container. The child of the container which is farthest from the user moves at the slowest speed, while the nearest child moves at the fastest speed. It uses the mouse cursor position on the container and creates the illusion of depth for the layers visible in the container. For example, your cursor enters the slider and the layers start to move away or approach to the cursor.
+➔ The parallax effect creates the illusion of depth when the cursor moves inside a specified container. The child of the container which is farthest from the user moves at the slowest speed, while the nearest child moves at the fastest speed. It uses the mouse cursor position on the container and creates the illusion of depth for the layers visible in the container. For example, your cursor enters the container and the layers start to move away or approach to the cursor.
 
 (Read more at https://smartslider3.com/blog/parallax-effect/)
 
@@ -39,7 +39,7 @@ import { MouseParallaxContainer, MouseParallaxChild } from "react-parallax-mouse
 The library provides you with two components.
 
 ### ``MouseParallaxContainer``
-➔ The main container in which the effect will take place. It takes in an infinite amount of ``MouseParallaxChild`` components as its children.
+➔ The main container in which the effect will take place. It takes in an infinite amount of ``MouseParallaxChild`` components as its children. Other types of children are also allowed, but the parallax effect will not apply to them. To include them in the effect, they have to be wrapped in a ``MouseParallaxChild`` component.
 
 ### ``MouseParallaxChild``
 ➔ The layer component for the effect. It provides a container for all of its children, which will stay on the same layer. Only works within the ``MouseParallaxContainer`` component.
