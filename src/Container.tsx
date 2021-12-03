@@ -22,7 +22,7 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
     if (!Array.isArray(children))
         children = [children];
 
-    const [offset, setOffset] = useState([0, 0]);
+    const [offset, setOffset] = useState<[number, number]>([0, 0]);
     // Container Reference with Callback to use it inside of useEffect
     const [containerRef, setContainerRef] = useState<{ current: HTMLDivElement | null }>({ current: null });
     const containerRefWithCallback = useCallback(node => { if (node !== null) { setContainerRef({ current: node }); } }, []);
@@ -42,7 +42,7 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
             var containerHeight = containerRef.current.clientHeight;
             var containerWidth = containerRef.current.clientWidth;
             var mousePosition = getMousePosition(e);
-            var relativeToCenter = [
+            var relativeToCenter: [number, number] = [
                 containerWidth / 2 - mousePosition.x,
                 containerHeight / 2 - mousePosition.y
             ];
@@ -124,18 +124,28 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
 
                                     // Apply Styles to each Child
                                     return (
-                                        <div
-                                            className={(child.props.className) && child.props.className}
-                                            style={
-                                                {
-                                                    willChange: "transform",
-                                                    transition: transitionStyle, WebkitTransition: transitionStyle, msTransition: transitionStyle,
-                                                    transform: transformStyle, WebkitTransform: transformStyle, msTransform: transformStyle,
-                                                    ...rest,
-                                                }
-                                            }>
-                                            {child}
-                                        </div>
+
+                                        ((child.props.factorX || child.props.factorX) || ((child.props.className || child.props.updateStyles) && child.type.name === "MouseParallaxChild"))
+                                            ?
+                                            <div
+                                                className={(child.props.className) && child.props.className}
+                                                style={
+                                                    {
+                                                        ...((child.props.factorX || child.props.factorX) ? {
+                                                            willChange: "transform",
+                                                            transition: transitionStyle, WebkitTransition: transitionStyle, msTransition: transitionStyle,
+                                                            transform: transformStyle, WebkitTransform: transformStyle, msTransform: transformStyle
+                                                        } : {}),
+                                                        ...rest
+                                                    }
+                                                }>
+                                                {child}
+                                            </div>
+                                            :
+                                            <>
+                                                {child}
+                                            </>
+
                                     )
 
                                 }}
