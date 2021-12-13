@@ -121,7 +121,7 @@ var MouseParallaxContainer = function (_a) {
             var transitionStyle = "" + ((!disableCSSTransition) && "transform 1e-7s linear") + ((transition) && ", ") + transition;
             var transformStyle = "translateX(" + springOffset.x + "px) translateY(" + springOffset.y + "px) " + transform;
             // Apply Styles to each Child
-            return (((child.props.factorX || child.props.factorX) || ((child.props.className || child.props.updateStyles) && child.type.name === "MouseParallaxChild"))
+            return (((child.props.factorX || child.props.factorY) || (child.props.className || child.props.updateStyles) && child.type.name === "MouseParallaxChild")
                 ?
                     React__default["default"].createElement("div", { className: (child.props.className) && child.props.className, style: __assign(__assign({}, ((child.props.factorX || child.props.factorX) ? {
                             willChange: "transform",
