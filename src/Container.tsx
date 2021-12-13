@@ -125,7 +125,7 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
                                     // Apply Styles to each Child
                                     return (
 
-                                        ((child.props.factorX || child.props.factorX) || ((child.props.className || child.props.updateStyles) && child.type.name === "MouseParallaxChild"))
+                                        ((child.props.factorX || child.props.factorY) || (child.props.className || child.props.updateStyles) && child.type.name === "MouseParallaxChild")
                                             ?
                                             <div
                                                 className={(child.props.className) && child.props.className}
