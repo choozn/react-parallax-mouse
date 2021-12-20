@@ -24,7 +24,7 @@
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
     "rollup": "^2.59.0",
-    "rollup-plugin-typescript2": "^0.30.0",
+    "rollup-plugin-typescript2": "^0.31.1",
     "typescript": "^4.4.4"
   },
   "peerDependencies": {
