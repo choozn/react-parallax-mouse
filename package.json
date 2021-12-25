@@ -11,7 +11,13 @@
     "start": "rollup -c -w"
   },
   "repository": "https://github.com/choozn/react-parallax-mouse",
-  "keywords": ["react", "component", "parallax", "mouse", "parallax-mouse"],
+  "keywords": [
+    "react",
+    "component",
+    "parallax",
+    "mouse",
+    "parallax-mouse"
+  ],
   "author": "choozn",
   "license": "ISC",
   "dependencies": {
@@ -24,6 +30,7 @@
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
     "rollup": "^2.59.0",
+    "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.31.1",
     "typescript": "^4.4.4"
   },
