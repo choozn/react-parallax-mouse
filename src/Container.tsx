@@ -13,17 +13,17 @@ interface Props {
     disableCSSTransition?: boolean;
 }
 
-// Helper Function to check if a Variable is a Function
+// Helper function to check if a variable is a function
 const isFunction: (value: any) => boolean = value => value && (Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function);
 
 const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, inverted, containerStyles, className, globalFactorX = 1, globalFactorY = 1, disableCSSTransition }: Props) => {
 
-    // Convert one Child cases into one dimensional Array to map over
+    // Convert one-child cases into one dimensional array to map over
     if (!Array.isArray(children))
         children = [children];
 
     const [offset, setOffset] = useState<[number, number]>([0, 0]);
-    // Container Reference with Callback to use it inside of useEffect
+    // Container reference with callback to use it inside of useEffect
     const [containerRef, setContainerRef] = useState<{ current: HTMLDivElement | null }>({ current: null });
     const containerRefWithCallback = useCallback(node => { if (node !== null) { setContainerRef({ current: node }); } }, []);
 
@@ -50,6 +50,7 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
         }
     }, [containerRef, getMousePosition, inverted]);
 
+    // Use window event handler when useWindowMouseEvents is enabled
     useEffect(() => {
         if (useWindowMouseEvents && containerRef.current) {
             window.addEventListener('mousemove', mouseMovementHandler, false);
@@ -71,7 +72,7 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
                 style={{ overflow: 'hidden', position: 'relative', ...containerStyles }}
                 ref={containerRefWithCallback}
                 onMouseMove={(!useWindowMouseEvents) ? mouseMovementHandler : () => { }}
-                onMouseLeave={(resetOnLeave && !useWindowMouseEvents) ? (() => setOffset([0, 0])) : () => null}
+                onMouseLeave={(resetOnLeave && !useWindowMouseEvents) ? (() => setOffset([0, 0])) : () => { }}
             >
                 {children.map(
                     (child, index) => (
@@ -101,7 +102,7 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
 
                                 {springOffset => {
 
-                                    // Update Style Injection
+                                    // updateStyles Injection
                                     var [transition, transform, rest] = ["", "", {}];
 
                                     if (child.props.updateStyles) {
@@ -115,30 +116,36 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
                                                 }
                                             ));
                                         else
-                                            // CSS Style Object
+                                            // Extract modified properties from styles
                                             ({ transition="", transform="", ...rest } = child.props.updateStyles);
                                     }
 
+                                    // Combine changes of the properties with additional styles from updateStyles
                                     let transitionStyle = `${(!disableCSSTransition) && "transform 1e-7s linear"}${(transition) && ", "}${transition}`;
                                     let transformStyle = `translateX(${springOffset.x}px) translateY(${springOffset.y}px) ${transform}`;
 
-                                    // Apply Styles to each Child
+                                    // Combine all styles into one style object; Reduce unnecessary CSS styles
+                                    let childStyle = {
+                                        ...((child.props.factorX || child.props.factorY) ? {
+                                            willChange: "transform",
+                                            transition: transitionStyle, WebkitTransition: transitionStyle, msTransition: transitionStyle,
+                                            transform: transformStyle, WebkitTransform: transformStyle, msTransform: transformStyle
+                                        } : (child.props.updateStyles) ? {
+                                            transition: transition, WebkitTransition: transition, msTransition: transition,
+                                            transform: transform, WebkitTransform: transform, msTransform: transform,
+                                        } : {}),
+                                        ...rest
+                                    }
+
+                                    // Render child in container if needed
                                     return (
 
                                         ((child.props.factorX || child.props.factorY) || (child.props.className || child.props.updateStyles) && child.type.name === "MouseParallaxChild")
                                             ?
                                             <div
                                                 className={(child.props.className) && child.props.className}
-                                                style={
-                                                    {
-                                                        ...((child.props.factorX || child.props.factorX) ? {
-                                                            willChange: "transform",
-                                                            transition: transitionStyle, WebkitTransition: transitionStyle, msTransition: transitionStyle,
-                                                            transform: transformStyle, WebkitTransform: transformStyle, msTransform: transformStyle
-                                                        } : {}),
-                                                        ...rest
-                                                    }
-                                                }>
+                                                style={childStyle}
+                                            >
                                                 {child}
                                             </div>
                                             :
