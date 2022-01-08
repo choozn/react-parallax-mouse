@@ -11,12 +11,13 @@ interface Props {
     globalFactorX?: number;
     globalFactorY?: number;
     disableCSSTransition?: boolean;
+    enabled?: boolean;
 }
 
 // Helper function to check if a variable is a function
 const isFunction: (value: any) => boolean = value => value && (Object.prototype.toString.call(value) === "[object Function]" || "function" === typeof value || value instanceof Function);
 
-const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, inverted, containerStyles, className, globalFactorX = 1, globalFactorY = 1, disableCSSTransition }: Props) => {
+const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, inverted, containerStyles, className, globalFactorX = 1, globalFactorY = 1, disableCSSTransition, enabled = true }: Props) => {
 
     // Convert one-child cases into one dimensional array to map over
     if (!Array.isArray(children))
@@ -52,17 +53,17 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
 
     // Use window event handler when useWindowMouseEvents is enabled
     useEffect(() => {
-        if (useWindowMouseEvents && containerRef.current) {
+        if (useWindowMouseEvents && enabled && containerRef.current) {
             window.addEventListener('mousemove', mouseMovementHandler, false);
             if (resetOnLeave)
                 window.addEventListener('mouseout', () => setOffset([0, 0]), false);
         }
         return () => {
-            window.removeEventListener('mousemove', mouseMovementHandler, false);
+            window.removeEventListener('mousemove', mouseMovementHandler);
             if (resetOnLeave)
                 window.removeEventListener('mouseout', () => setOffset([0, 0]), false);
         }
-    }, [containerRef, mouseMovementHandler, resetOnLeave, useWindowMouseEvents]);
+    }, [containerRef, mouseMovementHandler, resetOnLeave, useWindowMouseEvents, enabled]);
 
     return (
         <>
@@ -71,34 +72,38 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
                 id="mouse-parallax-container"
                 style={{ overflow: 'hidden', position: 'relative', ...containerStyles }}
                 ref={containerRefWithCallback}
-                onMouseMove={(!useWindowMouseEvents) ? mouseMovementHandler : () => { }}
-                onMouseLeave={(resetOnLeave && !useWindowMouseEvents) ? (() => setOffset([0, 0])) : () => { }}
+                onMouseMove={(enabled && !useWindowMouseEvents) ? mouseMovementHandler : () => { }}
+                onMouseLeave={(enabled && !useWindowMouseEvents && resetOnLeave) ? (() => setOffset([0, 0])) : () => { }}
             >
-                {children.map(
-                    (child, index) => (
+                {
+                    (children.map((child, index) => (
                         (child) && (
 
-                            <Motion key={child.key || index} style={{
+                            // Using react-motion to smooth the transition
+                            <Motion key={child.key || index} style={
+                                (enabled) ?
+                                    {
+                                        x: spring(
+                                            offset[0]
+                                            * (child.props.factorX || 0)
+                                            * globalFactorX
+                                            * ((child.props.inverted) ? -1 : 1)
+                                            * ((inverted) ? -1 : 1)
+                                            , child.props.springConfig
+                                        ),
 
-                                x: spring(
-                                    offset[0]
-                                    * (child.props.factorX || 0)
-                                    * globalFactorX
-                                    * ((child.props.inverted) ? -1 : 1)
-                                    * ((inverted) ? -1 : 1)
-                                    , child.props.springConfig
-                                ),
-
-                                y: spring(
-                                    offset[1]
-                                    * (child.props.factorY || 0)
-                                    * globalFactorY
-                                    * ((child.props.inverted) ? -1 : 1)
-                                    * ((inverted) ? -1 : 1)
-                                    , child.props.springConfig
-                                )
-
-                            }}>
+                                        y: spring(
+                                            offset[1]
+                                            * (child.props.factorY || 0)
+                                            * globalFactorY
+                                            * ((child.props.inverted) ? -1 : 1)
+                                            * ((inverted) ? -1 : 1)
+                                            , child.props.springConfig
+                                        )
+                                    }
+                                    :
+                                    { x: 0, y: 0 }
+                            }>
 
                                 {springOffset => {
 
@@ -156,12 +161,12 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
                                     )
 
                                 }}
+
                             </Motion>
 
                         )
-                    )
-                )}
-
+                    )))
+                }
             </div>
         </>
     );
