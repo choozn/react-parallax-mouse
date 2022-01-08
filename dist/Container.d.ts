@@ -9,6 +9,7 @@ interface Props {
     globalFactorX?: number;
     globalFactorY?: number;
     disableCSSTransition?: boolean;
+    enabled?: boolean;
 }
-declare const MouseParallaxContainer: ({ children, resetOnLeave, useWindowMouseEvents, inverted, containerStyles, className, globalFactorX, globalFactorY, disableCSSTransition }: Props) => JSX.Element;
+declare const MouseParallaxContainer: ({ children, resetOnLeave, useWindowMouseEvents, inverted, containerStyles, className, globalFactorX, globalFactorY, disableCSSTransition, enabled }: Props) => JSX.Element;
 export default MouseParallaxContainer;
