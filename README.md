@@ -61,27 +61,28 @@ The library provides you with two components.
 
 ### ➔ MouseParallaxContainer
 
-| prop | type | description  |
+| prop | type | description |
 | ------ | ------ | ----- |
-|resetOnLeave| boolean| Resets the view to 0:0 offset when the mouse leaves the container
-|useWindowMouseEvents| boolean | Uses the window event handler instead of the container event handler to track mouse movement
-|inverted| boolean | Inverts the offset of ``ParallaxChildren`` on mouse movement
-|globalFactorX| number (default: 1) | Strength multiplier of the effect on the X axis for every child component
-|globalFactorY| number (default: 1)| Strength multiplier of the effect on the Y axis for every child component
-|containerStyles| React.CSSProperties (Object) | Additional CSS attributes which are applied directly to the parallax container element (equal to ``style`` on HTML elements)
-|disableCSSTransition| boolean | Disables a CSS transition which smoothens the transform
-|className| string | The class name of the container
+| enabled | boolean (default: true) | Enables or disables the effect. 
+| resetOnLeave | boolean| Resets the view to 0:0 offset when the mouse leaves the container
+| useWindowMouseEvents | boolean | Uses the window event handler instead of the container event handler to track mouse movement
+| inverted | boolean | Inverts the offset of ``ParallaxChildren`` on mouse movement
+| globalFactorX | number (default: 1) | Strength multiplier of the effect on the X axis for every child component
+| globalFactorY | number (default: 1) | Strength multiplier of the effect on the Y axis for every child component
+| containerStyles | React.CSSProperties (Object) | Additional CSS attributes which are applied directly to the parallax container element (equal to ``style`` on HTML elements)
+| disableCSSTransition | boolean | Disables a CSS transition which smoothens the transform
+| className | string | The class name of the container
 
 ### ➔ MouseParallaxChild
 
 | prop | type | description  |
 | ------ | ------ | ----- |
-|**factorX** (!)| number | Strength factor for the movement on the X axis
-|**factorY** (!)| number | Strength factor for the movement on the Y axis
-|inverted| boolean | Inverts the offset of the specific child element on mouse movement
-|springConfig| SpringHelperConfig | React Motion Spring Config (https://github.com/chenglou/react-motion#helpers)
-|updateStyles| React.CSSProperties (Object) or Middleware Function (Explained below) | Additional CSS attributes which are applied directly to the parallax child container element (equal to ``style`` on HTML elements) on each offset calculation - A Middleware function can be used
-|className| string | The class name of the child
+| **factorX** (!) | number | Strength factor for the movement on the X axis
+| **factorY** (!) | number | Strength factor for the movement on the Y axis
+| inverted | boolean | Inverts the offset of the specific child element on mouse movement
+| springConfig | SpringHelperConfig | React Motion Spring Config (https://github.com/chenglou/react-motion#helpers)
+| updateStyles | React.CSSProperties (Object) or Middleware Function (Explained below) | Additional CSS attributes which are applied directly to the parallax child container element (equal to ``style`` on HTML elements) on each offset calculation - A Middleware function can be used
+| className | string | The class name of the child
 
 ## Middleware
 
@@ -118,9 +119,9 @@ The offset argument is an object with the following structure:
 
 | Middleware |  description  |
 | ------ | ----- |
-|container| Dimensions of the MouseParallaxContainer |
-|px| Offset of the mouse to the middle of the container in pixels |
-|percentage| Offset of the mouse to the middle of the container in % |
+| container | Dimensions of the MouseParallaxContainer |
+| px | Offset of the mouse to the middle of the container in pixels |
+| percentage | Offset of the mouse to the middle of the container in % |
 
 ---
 🚀 https://github.com/choozn
