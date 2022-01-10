@@ -53,16 +53,19 @@ const MouseParallaxContainer = ({ children, resetOnLeave, useWindowMouseEvents, 
 
     // Use window event handler when useWindowMouseEvents is enabled
     useEffect(() => {
-        if (useWindowMouseEvents && enabled && containerRef.current) {
-            window.addEventListener('mousemove', mouseMovementHandler, false);
-            if (resetOnLeave)
-                window.addEventListener('mouseout', () => setOffset([0, 0]), false);
+        if (enabled) {
+            if (useWindowMouseEvents && containerRef.current) {
+                window.addEventListener('mousemove', mouseMovementHandler, false);
+                if (resetOnLeave)
+                    window.addEventListener('mouseout', () => setOffset([0, 0]), false);
+            }
         }
         return () => {
-            window.removeEventListener('mousemove', mouseMovementHandler);
+            window.removeEventListener('mousemove', mouseMovementHandler, false);
             if (resetOnLeave)
                 window.removeEventListener('mouseout', () => setOffset([0, 0]), false);
         }
+
     }, [containerRef, mouseMovementHandler, resetOnLeave, useWindowMouseEvents, enabled]);
 
     return (
