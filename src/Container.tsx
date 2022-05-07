@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Motion, spring } from 'react-motion';
+import { Motion, spring } from 'react-motion-prefixed';
 
 interface Props {
   children: JSX.Element[] | JSX.Element;
