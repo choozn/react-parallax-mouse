@@ -12,6 +12,6 @@ interface Props {
     inverted?: boolean;
 }
 
-const MouseParallaxChild = ({ children }: Props) => (<> {children} </>);
+const MouseParallaxChild = ({ children }: Props) => <> {children} </>;
 
 export default MouseParallaxChild;

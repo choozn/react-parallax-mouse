@@ -1,4 +1,4 @@
-import { terser } from "rollup-plugin-terser";
+import { terser } from 'rollup-plugin-terser';
 import typescript from 'rollup-plugin-typescript2';
 import pkg from './package.json';
 
@@ -10,12 +10,9 @@ export default {
       format: 'cjs',
       exports: 'named',
       sourcemap: true,
-      strict: false
-    }
+      strict: false,
+    },
   ],
-  plugins: [
-    typescript(),
-    terser()
-  ],
-  external: ['react', 'react-dom', 'react-motion']
-}
+  plugins: [typescript(), terser()],
+  external: ['react', 'react-dom', 'react-motion'],
+};
