@@ -19,7 +19,7 @@
     "parallax-mouse"
   ],
   "author": "choozn",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "react-motion-prefixed": "^0.6.4"
   },
