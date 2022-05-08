@@ -40,7 +40,7 @@ const MouseParallaxContainer = ({
   // Container reference with callback to use it inside of useEffect
   // prettier-ignore
   const [containerRef, setContainerRef] = useState<{ current: HTMLDivElement | null; }>({ current: null });
-  const containerRefWithCallback = useCallback((node) => {
+  const containerRefWithCallback = useCallback((node: any) => {
     if (node !== null) {
       setContainerRef({ current: node });
     }
