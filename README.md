@@ -133,4 +133,4 @@ The offset argument is an object with the following structure:
 
 🚀 https://github.com/choozn
 
-© Copyright 2021 - @choozn
+© Copyright 2022 - @choozn
