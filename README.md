@@ -4,7 +4,7 @@
 
 💚 Efficient and lag free animations optimized for performance
 
-💙 Using react-motion under the hood for fluid animations
+💙 Using react-spring under the hood for fluid animations
 
 🚀 Ready to use and provided with types
 
@@ -40,94 +40,64 @@ yarn add react-parallax-mouse
 import { MouseParallaxContainer, MouseParallaxChild } from "react-parallax-mouse";
 ```
 
-The library provides you with two components.
+The library provides you with two components and one hook.
 
 ### `MouseParallaxContainer`
 
-➔ The main container in which the effect will take place. It takes in an infinite amount of `MouseParallaxChild` components as its children. Other types of children are also allowed, but the parallax effect will not apply to them. To include them in the effect, they have to be wrapped in a `MouseParallaxChild` component.
+➔ The main container in which the effect will take place. It provides a context for all of its children.
 
 ### `MouseParallaxChild`
 
-➔ The layer component for the effect. It provides a container for all of its children, which will stay on the same layer. Only works within the `MouseParallaxContainer` component.
+➔ The layer component for the effect. It provides a container for all of its children, which will stay on the same layer. Only works within the `MouseParallaxContainer` component (as direct child or subchild).
 
 ### Example
 
 ```html
-<MouseParallaxContainer>
-  <MouseParallaxChild factorX="{0.03}" factorY="{0.05}">
+<MouseParallaxContainer globalFactorX="{0.1}" globalFactorY="{0.1}">
+  <MouseParallaxChild factorX="{0.3}" factorY="{0.5}">
     <img src="example1.jpg" alt="" />
   </MouseParallaxChild>
-  <MouseParallaxChild factorX="{0.07}" factorY="{0.08}">
+  <MouseParallaxChild factorX="{0.7}" factorY="{0.8}">
     <img src="example2.jpg" alt="" />
   </MouseParallaxChild>
 </MouseParallaxContainer>
+```
+
+### `useParallaxOffset`
+
+➔ A hook that gives you direct access to the underlying spring and its values. It can be used to create custom child components.
+
+### Example
+
+```ts
+const { x, y } = useParallaxOffset();
 ```
 
 ## Props
 
 ### ➔ MouseParallaxContainer
 
-| prop                 | type                         | description                                                                                                                                             |
-| -------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| enabled              | boolean (default: true)      | Enables or disables the effect.                                                                                                                         |
-| resetOnLeave         | boolean                      | Resets the view to 0:0 offset when the mouse leaves the container                                                                                       |
-| useWindowMouseEvents | boolean                      | Uses the window event handler instead of the container event handler to track mouse movement                                                            |
-| inverted             | boolean                      | Inverts the offset of `ParallaxChildren` on mouse movement                                                                                              |
-| globalFactorX        | number (default: 1)          | Strength multiplier of the effect on the X axis for every child component                                                                               |
-| globalFactorY        | number (default: 1)          | Strength multiplier of the effect on the Y axis for every child component                                                                               |
-| containerStyles      | React.CSSProperties (Object) | Additional CSS attributes which are applied directly to the parallax container element (equal to `style` on HTML elements)                              |
-| enableCSSTransition  | boolean                      | Enables a CSS transition which smoothens the transform - This has been known to be laggy in certain browsers (Only use, if you know what you are doing) |
-| className            | string                       | The class name of the container                                                                                                                         |
+| prop                 | type                         | description                                                                                                                |
+| -------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| enabled              | boolean (default: true)      | Enables or disables the effect.                                                                                            |
+| globalFactorX        | number (default: 1)          | Strength multiplier of the effect on the X axis for every child component                                                  |
+| globalFactorY        | number (default: 1)          | Strength multiplier of the effect on the Y axis for every child component                                                  |
+| resetOnLeave         | boolean                      | Resets the view to 0:0 offset when the mouse leaves the container                                                          |
+| useWindowMouseEvents | boolean                      | Uses the window event handler instead of the container event handler to track mouse movement                               |
+| inverted             | boolean                      | Inverts the offset of `ParallaxChildren` on mouse movement                                                                 |
+| containerStyle       | React.CSSProperties (Object) | Additional CSS attributes which are applied directly to the parallax container element (equal to `style` on HTML elements) |
+| className            | string                       | The class name of the container                                                                                            |
+| springConfig         | SpringConfig                 | React Spring Config (https://react-spring.dev/common/configs)                                                              |
 
 ### ➔ MouseParallaxChild
 
-| prop            | type                                                                  | description                                                                                                                                                                                     |
-| --------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **factorX** (!) | number                                                                | Strength factor for the movement on the X axis                                                                                                                                                  |
-| **factorY** (!) | number                                                                | Strength factor for the movement on the Y axis                                                                                                                                                  |
-| inverted        | boolean                                                               | Inverts the offset of the specific child element on mouse movement                                                                                                                              |
-| springConfig    | SpringHelperConfig                                                    | React Motion Spring Config (https://github.com/chenglou/react-motion#helpers)                                                                                                                   |
-| updateStyles    | React.CSSProperties (Object) or Middleware Function (Explained below) | Additional CSS attributes which are applied directly to the parallax child container element (equal to `style` on HTML elements) on each offset calculation - A Middleware function can be used |
-| className       | string                                                                | The class name of the child                                                                                                                                                                     |
-
-## Middleware
-
-➔ `updateStyles` in the `MouseParallaxChild` Props can be supplied with a middleware function instead of a regular CSS styles object. This function takes in one argument.
-
-```js
-updateStyles={(offset) => (
-    {
-        // Return some kind of CSS styles
-    }
-)}
-```
-
-The offset argument is an object with the following structure:
-
-```js
-
-{
-    container: {
-        x: number,
-        y: number
-    },
-    px: {
-        x: number,
-        y: number
-    },
-    percentage: {
-        x: number,
-        y: number
-    };
-}
-
-```
-
-| Middleware | description                                                  |
-| ---------- | ------------------------------------------------------------ |
-| container  | Dimensions of the MouseParallaxContainer                     |
-| px         | Offset of the mouse to the middle of the container in pixels |
-| percentage | Offset of the mouse to the middle of the container in %      |
+| prop            | type                         | description                                                                                                            |
+| --------------- | ---------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| **factorX** (!) | number                       | Strength factor for the movement on the X axis                                                                         |
+| **factorY** (!) | number                       | Strength factor for the movement on the Y axis                                                                         |
+| inverted        | boolean                      | Inverts the offset of the specific child element on mouse movement                                                     |
+| style           | React.CSSProperties (Object) | Additional CSS attributes which are applied directly to the parallax child element (equal to `style` on HTML elements) |
+| className       | string                       | The class name of the child                                                                                            |
 
 ---
 
