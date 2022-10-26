@@ -1,9 +1,5 @@
-export interface UpdateStyleProps {
-  container: { x: number; y: number };
-  px: { x: number; y: number };
-  percentage: { x: number; y: number };
-}
+import { SpringValue } from "react-spring";
 
-export type Middleware = (
-  offsetOfMouseToCenter: UpdateStyleProps
-) => React.CSSProperties;
+// Interfaces
+export type Position = { x: number; y: number };
+export type SpringPosition = { x: SpringValue<number>; y: SpringValue<number> };

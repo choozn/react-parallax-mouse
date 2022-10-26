@@ -1,2 +1,3 @@
-export { default as MouseParallaxChild } from './Child';
-export { default as MouseParallaxContainer } from './Container';
+export { MouseParallaxChild } from './Child';
+export { MouseParallaxContainer } from './Container';
+export { useParallaxOffset } from './Context';
