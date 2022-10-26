@@ -14,5 +14,5 @@ export default {
     },
   ],
   plugins: [typescript(), terser()],
-  external: ['react', 'react-dom', 'react-motion-prefixed'],
+  external: ['react', 'react-dom', 'react-spring'],
 };
