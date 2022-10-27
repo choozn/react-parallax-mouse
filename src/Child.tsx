@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
-import { animated } from 'react-spring';
-import { useParallaxOffset } from './Context';
-import { SpringPosition } from './interfaces';
+import React, { useCallback } from "react";
+import { animated } from "react-spring";
+import { useParallaxOffset } from "./Context";
+import { SpringPosition } from "./interfaces";
 
 interface Props {
   factorX?: number;
@@ -12,7 +12,14 @@ interface Props {
   children?: JSX.Element | JSX.Element[];
 }
 
-const MouseParallaxChild = ({ factorX = 1, factorY = 1, inverted = false, className, style, children }: Props) => {
+const MouseParallaxChild = ({
+  factorX = 1,
+  factorY = 1,
+  inverted = false,
+  className,
+  style,
+  children,
+}: Props) => {
   const offset = useParallaxOffset();
   const calculateChildOffset = useCallback(
     (offset: SpringPosition) => {
@@ -23,9 +30,14 @@ const MouseParallaxChild = ({ factorX = 1, factorY = 1, inverted = false, classN
     [factorX, factorY]
   );
 
+  const divStyle = {
+    ...calculateChildOffset(offset),
+    ...style,
+  };
+
   return (
     <>
-      <animated.div {...(className && { className })} {...(style && { styles: style })} style={calculateChildOffset(offset)}>
+      <animated.div {...{ className }} style={divStyle}>
         {children}
       </animated.div>
     </>

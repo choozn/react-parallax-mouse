@@ -102,23 +102,21 @@ const MouseParallaxContainer = ({
     enabled,
   ]);
 
+  const useMouseMoveHandler = enabled && !useWindowMouseEvents;
+  const useMouseLeaveHandler = enabled && !useWindowMouseEvents && resetOnLeave;
+  const divEvents = {
+    onMouseMove: useMouseMoveHandler ? mouseMovementHandler : undefined,
+    onMouseLeave: useMouseLeaveHandler ? resetOffset : undefined,
+  };
+
   return (
     <OffsetContext.Provider value={offset}>
       <div
-        className={className && className}
         id="mouse-parallax-container"
-        style={{ overflow: "hidden", position: "relative", ...containerStyle }}
         ref={containerRefWithCallback}
-        onMouseMove={
-          enabled && !useWindowMouseEvents
-            ? mouseMovementHandler
-            : () => undefined
-        }
-        onMouseLeave={
-          enabled && !useWindowMouseEvents && resetOnLeave
-            ? () => offsetApi.start(defaultSpring)
-            : () => undefined
-        }
+        style={{ overflow: "hidden", position: "relative", ...containerStyle }}
+        {...{ className }}
+        {...divEvents}
       >
         {children}
       </div>
