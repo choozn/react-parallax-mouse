@@ -53,11 +53,11 @@ The library provides you with two components and one hook.
 ### Example
 
 ```html
-<MouseParallaxContainer globalFactorX="{0.1}" globalFactorY="{0.1}">
-  <MouseParallaxChild factorX="{0.3}" factorY="{0.5}">
+<MouseParallaxContainer globalFactorX={0.1} globalFactorY={0.1}>
+  <MouseParallaxChild factorX={0.3} factorY={0.5}>
     <img src="example1.jpg" alt="" />
   </MouseParallaxChild>
-  <MouseParallaxChild factorX="{0.7}" factorY="{0.8}">
+  <MouseParallaxChild factorX={0.7} factorY={0.8}>
     <img src="example2.jpg" alt="" />
   </MouseParallaxChild>
 </MouseParallaxContainer>
