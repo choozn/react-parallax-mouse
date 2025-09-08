@@ -24,7 +24,7 @@
     "react-spring": "^9.7.3"
   },
   "devDependencies": {
-    "@react-spring/types": "^9.7.3",
+    "@react-spring/types": "^10.0.2",
     "@types/react-dom": ">=16.8.0",
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
